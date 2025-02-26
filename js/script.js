@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Botão "Anterior"
         const btnAnterior = document.createElement("button");
-        btnAnterior.className = `btn btn-sm btn-outline-danger mx-1 ${currentPage === 1 ? "disabled" : ""}`;
+        btnAnterior.className = `btn btn-sm btn-outline-primary mx-1 ${currentPage === 1 ? "disabled" : ""}`;
         btnAnterior.textContent = "<";
         btnAnterior.addEventListener("click", () => {
             if (currentPage > 1) {
@@ -96,10 +96,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         paginationControls.appendChild(btnAnterior);
 
-        // Cria os botões de página
-        for (let i = 1; i <= totalPaginas; i++) {
+        // Cria os botões de página (apenas 3 opções visíveis)
+        const maxBotoesVisiveis = 3;
+        let inicioPaginas = Math.max(1, currentPage - Math.floor(maxBotoesVisiveis / 2));
+        let fimPaginas = Math.min(totalPaginas, inicioPaginas + maxBotoesVisiveis - 1);
+
+        // Ajusta o início se necessário
+        if (fimPaginas - inicioPaginas + 1 < maxBotoesVisiveis) {
+            inicioPaginas = Math.max(1, fimPaginas - maxBotoesVisiveis + 1);
+        }
+
+        for (let i = inicioPaginas; i <= fimPaginas; i++) {
             const button = document.createElement("button");
-            button.className = `btn btn-sm ${i === currentPage ? "btn-danger" : "btn-outline-danger"} mx-1`;
+            button.className = `btn btn-sm ${i === currentPage ? "btn-primary" : "btn-outline-primary"} mx-1`;
             button.textContent = i;
             button.addEventListener("click", () => {
                 currentPage = i; // Atualiza a página atual
@@ -110,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Botão "Próximo"
         const btnProximo = document.createElement("button");
-        btnProximo.className = `btn btn-sm btn-outline-danger mx-1 ${currentPage === totalPaginas ? "disabled" : ""}`;
+        btnProximo.className = `btn btn-sm btn-outline-primary mx-1 ${currentPage === totalPaginas ? "disabled" : ""}`;
         btnProximo.textContent = ">";
         btnProximo.addEventListener("click", () => {
             if (currentPage < totalPaginas) {
