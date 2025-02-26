@@ -1,4 +1,3 @@
-script funcionando
 // Array global para armazenar o carrinho
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
@@ -10,7 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Elemento 'produtos-container' não encontrado!");
         return;
     }
-    
+
+    // Função para adicionar produto ao carrinho
+    function adicionarAoCarrinho(produtoId) {
+        const produto = listaProdutos.find((p) => p.id === parseInt(produtoId));
+        if (produto) {
+            const produtoNoCarrinho = carrinho.find((p) => p.id === produto.id);
+            if (produtoNoCarrinho) {
+                produtoNoCarrinho.quantidade += 1; // Aumenta a quantidade se o produto já estiver no carrinho
+            } else {
+                carrinho.push({ ...produto, quantidade: 1 }); // Adiciona o produto com quantidade inicial 1
+            }
+            localStorage.setItem("carrinho", JSON.stringify(carrinho)); // Salva no localStorage
+            alert(`${produto.name} adicionado ao carrinho!`);
+        }
+    }
 
     // Função de paginação
     let currentPage = 1; // Página atual
@@ -112,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Função para exibir os produtos
     function displayProducts(products) {
+        const produtosContainer = document.getElementById("produtos-container");
         produtosContainer.innerHTML = "";
         if (products.length === 0) {
             produtosContainer.innerHTML = "<p>Nenhum produto encontrado.</p>";
@@ -127,38 +141,22 @@ document.addEventListener("DOMContentLoaded", () => {
                         <h5 class="card-title">${produto.name}</h5>
                         <p class="card-text truncate-4l">${produto.description}</p>
                     </div>
-                    <div class="card-footer d-flex justify-content-between align-items-center">
-                        <p class="card-text m-0"><strong>R$ ${produto.price.toFixed(2)}</strong></p>
-                        <button class="btn btn-primary add-to-cart" data-id="${produto.id}">Adicionar</button>
+                    <div class="card-footer">
+                        <p class="card-text"><strong>R$ ${produto.price.toFixed(2)}</strong></p>
+                        <button class="btn btn-success" onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
                     </div>
                 </div>
             `;
             produtosContainer.appendChild(card);
         });
-    
-        // Adiciona evento de clique aos botões "Adicionar"
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function () {
-                const productId = parseInt(this.getAttribute('data-id'));
-                const productToAdd = listaProdutos.find(product => product.id === productId);
-                if (productToAdd) {
-                    addToCart(productToAdd);
-                }
+
+        // Adiciona evento de clique aos botões
+        document.querySelectorAll(".btn-adicionar").forEach((botao) => {
+            botao.addEventListener("click", (event) => {
+                const produtoId = event.target.getAttribute("data-id");
+                adicionarAoCarrinho(produtoId);
             });
         });
-    }
-    //verifica se o produto esta no carrinho
-    function addToCart(product) {
-        // Verifica se o produto já está no carrinho
-        const existingProduct = carrinho.find(item => item.id === product.id);
-        if (existingProduct) {
-            existingProduct.quantity += 1; // Incrementa a quantidade
-        } else {
-            carrinho.push({ ...product, quantity: 1 }); // Adiciona o produto com quantidade inicial 1
-        }
-        // Salva o carrinho no localStorage
-        localStorage.setItem("carrinho", JSON.stringify(carrinho));
-        alert(`${product.name} adicionado ao carrinho!`);
     }
 
     // Exibe todos os produtos inicialmente
@@ -175,4 +173,4 @@ document.addEventListener("DOMContentLoaded", () => {
         currentPage = 1; // Volta para a primeira página ao mudar a ordenação
         updateProductDisplay();
     });
-})
+});
