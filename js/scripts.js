@@ -18,19 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
         // Renderiza cada produto
         listaProdutos.forEach((produto) => {
             const card = document.createElement("div");
-            card.className = "col-xl-2 col-lg-3 col-md-4 col-6 product py-2";
+            card.className = "col-md-4 mb-4";
             card.innerHTML = `
-                <div class="card text-center bg-light h-100 d-flex flex-column" style="max-width: 250px;">
-                    <img src="${produto.image}" class="card-img-top" alt="${product.name}">
-                <div class="card-body">
-                    <h5 class="card-title">${produto.name}</h5>
-                    <p class="card-text truncate-4l">${produto.description}</p>
+                <div class="card">
+                    <img src="${produto.imagem}" class="card-img-top" alt="${produto.nome}">
+                    <div class="card-body">
+                        <h5 class="card-title">${produto.nome}</h5>
+                        <p class="card-text">R$ ${produto.preco.toFixed(2)}</p>
+                        <button class="btn btn-primary btn-adicionar" data-id="${produto.id}">Adicionar ao Carrinho</button>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <p class="card-text"><strong> ${produto.valor}</strong></p>
-                    <button class="btn btn-success" onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
-                </div>
-            </div>
             `;
             produtosContainer.appendChild(card);
         });
