@@ -1,5 +1,5 @@
 // Array com todos os produtos
-const allProducts = [
+const listaProdutos = [
     { 
         id: 1,
         name: "Batata", 
