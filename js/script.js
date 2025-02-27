@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <p class="card-text m-0"><strong>R$ ${produto.price.toFixed(2)}</strong></p>
                     </div>
-                    <button class="btn btn-primary btn-adicionar" data-id="${produto.id}">Adicionar ao Carrinho</button>
+                    <button class="btn btn-primary btn-adicionar m-1" data-id="${produto.id}">Adicionar ao Carrinho</button>
                 </div>
             `;
             produtosContainer.appendChild(card);
