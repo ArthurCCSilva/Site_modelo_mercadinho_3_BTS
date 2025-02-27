@@ -7,6 +7,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentPage = 1; // Página atual
     const produtosPorPagina = 12; // Número de produtos por página
 
+    // Função para remover acentos de uma string
+    function removerAcentos(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
     // Função para renderizar os produtos na página
     function renderizarProdutos(produtosFiltrados) {
         // Limpa o conteúdo anterior
@@ -54,6 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return listaProdutos.filter((produto) =>
             produto.name.toLowerCase().includes(termoPesquisa) ||
             produto.description.toLowerCase().includes(termoPesquisa)
+        );
+    }
+
+    // Função para filtrar produtos com base na barra de pesquisa
+    function filtrarProdutos() {
+        const termoPesquisa = removerAcentos(searchInput.value.toLowerCase()); // Remove acentos do termo de pesquisa
+        return listaProdutos.filter((produto) =>
+            removerAcentos(produto.name.toLowerCase()).includes(termoPesquisa) || // Remove acentos do nome
+            removerAcentos(produto.description.toLowerCase()).includes(termoPesquisa) // Remove acentos da descrição
         );
     }
 
@@ -130,8 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
         paginationControls.appendChild(btnProximo);
     }
 
-    // Função para atualizar a interface com base nos filtros, ordenação e paginação
-    function atualizarInterface() {
+     // Função para atualizar a interface com base nos filtros, ordenação e paginação
+     function atualizarInterface() {
         const produtosFiltrados = filtrarProdutos();
         const produtosOrdenados = ordenarProdutos(produtosFiltrados);
         renderizarProdutos(produtosOrdenados); // Renderiza os produtos da página atual

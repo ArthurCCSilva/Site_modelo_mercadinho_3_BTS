@@ -85,4 +85,19 @@ p.truncate-4l {
     text-overflow: ellipsis;
 }
 
+/* Fixar o botão no canto inferior direito */
+.fixed-bottom-end {
+    position: fixed;
+    bottom: 20px; /* Distância do rodapé */
+    right: 20px; /* Distância da borda direita */
+    z-index: 1000; /* Garante que o botão fique acima de outros elementos */
+}
+
+/* Ajuste para telas menores (mobile) */
+@media (max-width: 768px) {
+    .fixed-bottom-end {
+        bottom: 15px;
+        right: 15px;
+    }
+}
 /*footer*/

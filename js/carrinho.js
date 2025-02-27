@@ -9,9 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             listaCarrinho.innerHTML = "<p>O carrinho está vazio.</p>";
             return;
         }
-
         let total = 0;
-
         // Renderiza cada produto no carrinho
         carrinho.forEach((produto, index) => {
             const div = document.createElement("div");
@@ -33,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
             listaCarrinho.appendChild(div);
             total += produto.price * produto.quantidade; // Calcula o total
         });
-
         // Exibe o total
         const totalElement = document.createElement("div");
         totalElement.className = "row mt-3 fw-bold";
@@ -42,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="col-md-4 text-end">R$ ${total.toFixed(2)}</div>
         `;
         listaCarrinho.appendChild(totalElement);
-
         // Adiciona o campo de seleção de forma de pagamento
         const formaPagamentoDiv = document.createElement("div");
         formaPagamentoDiv.className = "mt-3";
@@ -56,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </select>
         `;
         listaCarrinho.appendChild(formaPagamentoDiv);
-
         // Adiciona o botão para enviar ao WhatsApp
         const whatsappButton = document.createElement("button");
         whatsappButton.className = "btn btn-success mt-3 w-100";
@@ -87,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function enviarParaWhatsApp(total) {
         const formaPagamento = document.getElementById("forma-pagamento").value;
         let mensagem = "🛒 *Lista de Compras* 🛒\n\n";
-
         // Adiciona os detalhes dos produtos
         carrinho.forEach((produto) => {
             const subtotal = produto.price * produto.quantidade;
@@ -96,20 +90,20 @@ document.addEventListener("DOMContentLoaded", () => {
             mensagem += `*Quantidade:* ${produto.quantidade}\n`;
             mensagem += `*Subtotal:* R$${subtotal.toFixed(2)}\n\n`;
         });
-
         // Adiciona o total e a forma de pagamento
         mensagem += `*Total:* R$${total.toFixed(2)}\n`;
         mensagem += `*Forma de Pagamento:* ${formatarFormaPagamento(formaPagamento)}\n`;
-
         // Se a forma de pagamento for Pix, adiciona o número do Pix e o QR Code
         if (formaPagamento === "pix") {
             const numeroPix = "123.456.789-00"; // Substitua pelo número real do Pix
             mensagem += `\n*Chave Pix:* ${numeroPix}\n`;
         }
-
         // Cria o link do WhatsApp
         const url = `https://wa.me/5588993503686?text=${encodeURIComponent(mensagem)}`;
         window.open(url, "_blank");
+
+        // Chama a função para deletar os produtos após o envio
+        deletarProdutos();
     }
 
     // Função para formatar a forma de pagamento
@@ -126,6 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
             default:
                 return "Não especificado";
         }
+    }
+
+    // Função para deletar os produtos do carrinho
+    function deletarProdutos() {
+        carrinho = []; // Limpa o array do carrinho
+        localStorage.removeItem("carrinho"); // Remove o carrinho do localStorage
+        renderizarCarrinho(); // Re-renderiza o carrinho para mostrar que está vazio
+        alert("Os produtos foram removidos do carrinho após o envio!");
     }
 
     // Inicializa a renderização do carrinho
