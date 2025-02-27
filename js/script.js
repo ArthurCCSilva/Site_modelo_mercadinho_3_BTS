@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p class="card-text truncate-4l">${produto.description}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-between align-items-center">
-                        <p class="card-text m-0"><strong>R$ ${produto.price.toFixed(2)}</strong></p>
+                        <p class="card-text m-0"><strong>${produto.valor}</strong></p>
                     </div>
                     <button class="btn btn-primary btn-adicionar m-1" data-id="${produto.id}">Adicionar ao Carrinho</button>
                 </div>

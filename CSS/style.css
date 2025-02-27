@@ -86,6 +86,7 @@ p.truncate-4l {
 }
 
 /* Fixar o botão no canto inferior direito */
+/* Estilo para o botão flutuante */
 .fixed-bottom-end {
     position: fixed;
     bottom: 20px; /* Distância do rodapé */
@@ -95,9 +96,18 @@ p.truncate-4l {
 
 /* Ajuste para telas menores (mobile) */
 @media (max-width: 768px) {
+    .btn-carrinho-web{
+        display: none;
+    }
     .fixed-bottom-end {
         bottom: 15px;
         right: 15px;
     }
+}
+
+/* Estilo para o ícone */
+.icon-white {
+    color: #ffffff; /* Cor branca */
+    font-size: 1.5rem; /* Tamanho do ícone */
 }
 /*footer*/
