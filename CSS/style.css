@@ -100,14 +100,14 @@ p.truncate-4l {
         display: none;
     }
     .fixed-bottom-end {
-        bottom: 20px;
-        right: 20px;
+        bottom: 15px;
+        right: 15px;
     }
 }
 
 /* Estilo para o ícone */
 .icon-white {
     color: #ffffff; /* Cor branca */
-    font-size: 1.5rem; /* Tamanho do ícone */
+    font-size: 2rem; /* Tamanho do ícone */
 }
 /*footer*/
